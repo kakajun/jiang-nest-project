@@ -1,21 +1,21 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { PostsModule } from './posts/posts.module';
-import envConfig from '../config/env';
-import { PostsEntity } from './posts/entities/posts.entity';
-import { AuthModule } from './auth/auth.module';
-import { AuthEntity } from './auth/entities/auth.entity';
-import { APP_GUARD } from '@nestjs/core';
-import { jwtAuthGuard } from './auth/jwt-auth.grard';
-import { RedisService } from './redis/redis.service';
-import { RedisModule } from './redis/redis.module';
-import { UploadModule } from './upload/upload.module';
-import { LoggerService } from './logger/logger.service';
-import { TimerService } from './timer/timer.service';
-import { TimerModule } from './timer/timer.module';
+import { Module } from '@nestjs/common'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { AppController } from './app.controller'
+import { AppService } from './app.service'
+import { PostsModule } from './posts/posts.module'
+import envConfig from '../config/env'
+import { PostsEntity } from './posts/entities/posts.entity'
+import { AuthModule } from './auth/auth.module'
+import { AuthEntity } from './auth/entities/auth.entity'
+import { APP_GUARD } from '@nestjs/core'
+import { jwtAuthGuard } from './auth/jwt-auth.grard'
+import { RedisService } from './redis/redis.service'
+import { RedisModule } from './redis/redis.module'
+import { UploadModule } from './upload/upload.module'
+import { LoggerService } from './logger/logger.service'
+import { TimerService } from './timer/timer.service'
+import { TimerModule } from './timer/timer.module'
 
 @Module({
   imports: [

@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { createLogger, transports, format, Logger } from 'winston';
-import 'winston-daily-rotate-file';
+import { Injectable } from '@nestjs/common'
+import { createLogger, transports, format, Logger } from 'winston'
+import 'winston-daily-rotate-file'
 
 @Injectable()
 export class LoggerService {
-  private logger: Logger;
+  private logger: Logger
 
   constructor() {
     this.logger = createLogger({
@@ -13,15 +13,15 @@ export class LoggerService {
         format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }), // 设置时间戳格式
         format.printf(({ timestamp, level, message, ...metadata }) => {
           // 确保时间戳在日志的最前面，并且处理 metadata（如 params）
-          let logMessage = `${timestamp} [${level}] : ${message}`;
+          let logMessage = `${timestamp} [${level}] : ${message}`
 
           // 如果有 metadata（附加的对象），将它们格式化为 JSON
           if (Object.keys(metadata).length > 0) {
             if (metadata.message !== 'message') {
-              logMessage += ` | ${JSON.stringify(metadata, null, 2)}`;
+              logMessage += ` | ${JSON.stringify(metadata, null, 2)}`
             }
           }
-          return logMessage;
+          return logMessage
         }),
       ),
       transports: [
@@ -43,19 +43,19 @@ export class LoggerService {
               format: 'YYYY-MM-DD HH:mm:ss',
             }),
             format.printf((info) => {
-              const paramsInfo = JSON.parse(JSON.stringify(info));
+              const paramsInfo = JSON.parse(JSON.stringify(info))
               // 避免 message 字段在日志中作为 key 出现
-              delete paramsInfo.message;
+              delete paramsInfo.message
               return `${info.timestamp} [${info.level}] : ${info.message} ${
                 Object.keys(info).length
                   ? JSON.stringify(paramsInfo, null, 2)
                   : ''
-              }`;
+              }`
             }),
           ),
         }),
       ],
-    });
+    })
   }
 
   log(message: string, params: object = {}) {
@@ -65,10 +65,10 @@ export class LoggerService {
         message,
         ...params,
         level: 'info', // 设定日志级别为 info
-      };
-      this.logger.info(logMessage);
+      }
+      this.logger.info(logMessage)
     } else {
-      this.logger.info(message);
+      this.logger.info(message)
     }
   }
 
@@ -80,10 +80,10 @@ export class LoggerService {
         ...params,
         level: 'error', // 设定日志级别为 error
         trace, // 如果有异常堆栈信息，可以添加到日志中
-      };
-      this.logger.error(logMessage);
+      }
+      this.logger.error(logMessage)
     } else {
-      this.logger.error(message);
+      this.logger.error(message)
     }
   }
 
@@ -94,10 +94,10 @@ export class LoggerService {
         message,
         ...params,
         level: 'warn', // 设定日志级别为 warn
-      };
-      this.logger.warn(logMessage);
+      }
+      this.logger.warn(logMessage)
     } else {
-      this.logger.warn(message);
+      this.logger.warn(message)
     }
   }
 
@@ -108,10 +108,10 @@ export class LoggerService {
         message,
         ...params,
         level: 'debug', // 设定日志级别为 debug
-      };
-      this.logger.debug(logMessage);
+      }
+      this.logger.debug(logMessage)
     } else {
-      this.logger.debug(message);
+      this.logger.debug(message)
     }
   }
 
@@ -122,10 +122,10 @@ export class LoggerService {
         message,
         ...params,
         level: 'info', // 设定日志级别为 info
-      };
-      this.logger.info(logMessage);
+      }
+      this.logger.info(logMessage)
     } else {
-      this.logger.info(message);
+      this.logger.info(message)
     }
   }
 }

@@ -1,7 +1,7 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { Public } from 'src/common/public.decorator';
+import { Body, Controller, Post } from '@nestjs/common'
+import { AuthService } from './auth.service'
+import { CreateAuthDto } from './dto/create-auth.dto'
+import { Public } from 'src/common/public.decorator'
 
 @Controller('auth')
 export class AuthController {
@@ -15,7 +15,7 @@ export class AuthController {
   @Public()
   @Post('/signup')
   signup(@Body() signupData: CreateAuthDto) {
-    return this.authService.signup(signupData);
+    return this.authService.signup(signupData)
   }
 
   /**
@@ -26,6 +26,6 @@ export class AuthController {
   @Public()
   @Post('/login')
   login(@Body() loginData: CreateAuthDto) {
-    return this.authService.login(loginData);
+    return this.authService.login(loginData)
   }
 }
