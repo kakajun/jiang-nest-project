@@ -11,6 +11,7 @@ import {
   Query,
 } from '@nestjs/common'
 import { CreatePostDto } from './dto/create-post.dot'
+import { ApiBearerAuth } from '@nestjs/swagger'
 
 @ApiTags('文章')
 @Controller('post')
@@ -22,6 +23,7 @@ export class PostsController {
    * @param post
    */
   @ApiOperation({ summary: '创建文章' })
+  @ApiBearerAuth()
   @Post('/create')
   async create(@Body() post: CreatePostDto) {
     return await this.postsService.create(post)
@@ -31,6 +33,7 @@ export class PostsController {
    * 获取所有文章
    */
   @ApiOperation({ summary: '获取文章列表' })
+  @ApiBearerAuth()
   @Get('/findAll')
   async findAll(@Query() query): Promise<PostsRo> {
     return await this.postsService.findAll(query)
@@ -40,6 +43,7 @@ export class PostsController {
    * 获取指定文章
    * @param id
    */
+  @ApiBearerAuth()
   @Get(':id')
   async findById(@Param('id') id) {
     return await this.postsService.findById(id)
@@ -50,6 +54,7 @@ export class PostsController {
    * @param id
    * @param post
    */
+  @ApiBearerAuth()
   @Put(':id')
   async update(@Param('id') id, @Body() post) {
     return await this.postsService.updateById(id, post)
@@ -59,6 +64,7 @@ export class PostsController {
    * 删除
    * @param id
    */
+  @ApiBearerAuth()
   @Delete('id')
   async remove(@Param('id') id) {
     return await this.postsService.remove(id)
