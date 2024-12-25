@@ -18,7 +18,12 @@ async function bootstrap() {
     .addBearerAuth()
     .build()
   const document = SwaggerModule.createDocument(app, config)
-  SwaggerModule.setup('docs', app, document)
+  SwaggerModule.setup('docs', app, document, {
+    swaggerOptions: {
+      persistAuthorization: true,
+    },
+    customSiteTitle: 'API Docs',
+  })
 
   // 注册全局管道
   app.useGlobalPipes(new ValidationPipe())
