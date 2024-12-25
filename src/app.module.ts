@@ -56,5 +56,6 @@ import { TimerModule } from './timer/timer.module'
     LoggerService,
     TimerService,
   ],
+  exports: [LoggerService], // 导出 LoggerService
 })
 export class AppModule {}

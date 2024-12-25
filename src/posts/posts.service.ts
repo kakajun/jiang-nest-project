@@ -1,7 +1,8 @@
 import { HttpException, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { getRepository, Repository } from 'typeorm'
+import { Repository } from 'typeorm'
 import { PostsEntity } from './entities/posts.entity'
+import { LoggerService } from '../logger/logger.service'
 
 export interface PostsRo {
   list: PostsEntity[]
@@ -12,6 +13,7 @@ export class PostsService {
   constructor(
     @InjectRepository(PostsEntity)
     private readonly postsRepository: Repository<PostsEntity>,
+    private readonly logger: LoggerService,
   ) {}
 
   // 创建文章
@@ -29,16 +31,15 @@ export class PostsService {
 
   // 获取文章列表
   async findAll(query): Promise<PostsRo> {
-    const qb = await getRepository(PostsEntity).createQueryBuilder('post')
-    qb.where('1 = 1')
+    const qb = this.postsRepository.createQueryBuilder('post')
     qb.orderBy('post.create_time', 'DESC')
-
     const count = await qb.getCount()
     const { pageNum = 1, pageSize = 10, ...params } = query
+    // this.logger.log('Parsed query params:', { pageNum, pageSize, params })
     qb.limit(pageSize)
     qb.offset(pageSize * (pageNum - 1))
-
     const posts = await qb.getMany()
+    // this.logger.log('Posts retrieved:', posts)
     return { list: posts, count: count }
   }
 
