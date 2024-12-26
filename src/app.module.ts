@@ -16,6 +16,8 @@ import { UploadModule } from './upload/upload.module'
 import { LoggerService } from './logger/logger.service'
 import { TimerService } from './timer/timer.service'
 import { TimerModule } from './timer/timer.module'
+import { PetModule } from './pet/pet.module'
+import { PetEntity } from './pet/entities/pet.entity'
 
 @Module({
   imports: [
@@ -28,7 +30,7 @@ import { TimerModule } from './timer/timer.module'
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         type: 'mysql', // 数据库类型
-        entities: [AuthEntity, PostsEntity], // 数据表实体，synchronize为true时，自动创建表，生产环境建议关闭
+        entities: [AuthEntity, PostsEntity, PetEntity], // 数据表实体，synchronize为true时，自动创建表，生产环境建议关闭
         host: configService.get('DB_HOST'), // 主机，默认为localhost
         port: configService.get<number>('DB_PORT'), // 端口号
         username: configService.get('DB_USER'), // 用户名
@@ -43,6 +45,7 @@ import { TimerModule } from './timer/timer.module'
     RedisModule,
     UploadModule,
     TimerModule,
+    PetModule,
   ],
   controllers: [AppController],
   // 注册为全局守卫
