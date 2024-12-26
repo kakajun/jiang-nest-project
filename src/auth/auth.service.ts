@@ -4,14 +4,14 @@ import { AuthEntity } from './entities/auth.entity'
 import { Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
 import * as bcryptjs from 'bcryptjs'
-import { JwtService } from '@nestjs/jwt'
+import { JwtService } from '@nestjs/jwt' // 保留导入，因为后续会用到
 import { RedisService } from '../redis/redis.service'
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(AuthEntity) private readonly auth: Repository<AuthEntity>,
-    private readonly JwtService: JwtService,
+    private readonly jwtService: JwtService, // 修改为小写驼峰命名法
     private readonly redisService: RedisService, // 注册redis控制器
   ) {}
 
@@ -48,7 +48,7 @@ export class AuthService {
     const payload = { username: findUser.username }
 
     return {
-      access_token: this.JwtService.sign(payload),
+      access_token: this.jwtService.sign(payload),
       msg: '登录成功',
     }
   }
