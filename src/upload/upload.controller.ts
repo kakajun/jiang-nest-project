@@ -4,6 +4,7 @@ import {
   UseInterceptors,
   UploadedFiles,
 } from '@nestjs/common'
+import { ApiBearerAuth, ApiBody, ApiTags, ApiConsumes } from '@nestjs/swagger'
 import { FilesInterceptor } from '@nestjs/platform-express'
 import { UploadService } from './upload.service'
 import * as multer from 'multer'
@@ -12,10 +13,27 @@ import * as fs from 'fs'
 import { ConfigService } from '@nestjs/config'
 
 @Controller('upload')
+@ApiTags('Upload')
 export class UploadController {
   constructor(private readonly uploadService: UploadService) {}
 
+  @ApiBearerAuth()
   @Post('/files')
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        files: {
+          type: 'array',
+          items: {
+            type: 'string',
+            format: 'binary',
+          },
+        },
+      },
+    },
+  })
   @UseInterceptors(
     FilesInterceptor('files', undefined, {
       storage: multer.diskStorage({
