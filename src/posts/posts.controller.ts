@@ -21,17 +21,13 @@ import { UpdatePostDto } from './dto/update-post.dto' // 假设你有一个 DTO 
 import { LoggerService } from '../logger/logger.service'
 
 @ApiTags('文章')
-@Controller('post')
+@Controller('articles')
 export class PostsController {
   constructor(
     private readonly postsService: PostsService,
     private readonly logger: LoggerService,
   ) {}
 
-  /**
-   * 创建文章
-   * @param post
-   */
   @ApiOperation({ summary: '创建文章' })
   @ApiBearerAuth()
   @Post('/create')
@@ -39,10 +35,7 @@ export class PostsController {
     return await this.postsService.create(post)
   }
 
-  /**
-   * 获取所有文章
-   */
-  @ApiOperation({ summary: '获取文章列表' })
+  @ApiOperation({ summary: '获取所有文章列表' })
   @ApiBearerAuth()
   @Get('/findAll')
   async findAll(@Query() query): Promise<PostsRo> {
@@ -57,11 +50,8 @@ export class PostsController {
     }
   }
 
-  /**
-   * 获取指定文章
-   * @param id
-   */
   @ApiBearerAuth()
+  @ApiOperation({ summary: '通过ID获取指定文章' })
   @Get(':id')
   @ApiParam({
     name: 'id',
@@ -73,12 +63,8 @@ export class PostsController {
     return await this.postsService.findById(id)
   }
 
-  /**
-   * 更新文章
-   * @param id
-   * @param post
-   */
   @ApiBearerAuth()
+  @ApiOperation({ summary: '更新文章' })
   @Put(':id')
   @ApiParam({
     name: 'id',
@@ -91,11 +77,8 @@ export class PostsController {
     return await this.postsService.updateById(id, post)
   }
 
-  /**
-   * 删除
-   * @param id
-   */
   @ApiBearerAuth()
+  @ApiOperation({ summary: '通过ID删除文章' })
   @Delete(':id')
   @ApiParam({
     name: 'id',
